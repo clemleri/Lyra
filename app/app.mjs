@@ -2,9 +2,9 @@
 import express from "express";
 import session from 'express-session';
 import cors from 'cors';
-import artistController from './api/controller/ArtistController.mjs';
-import trackController from './api/controller/TrackController.mjs';
-import userController from './api/controller/UserController.mjs';
+import artist from './api/route/artist.mjs';
+import track from './api/route/track.mjs';
+import user from './api/route/user.mjs';
 import dotenv from 'dotenv';
 import swaggerUi from "swagger-ui-express";
 import swaggerJson from "swagger-json"
@@ -34,9 +34,9 @@ app.use(session({
 
 
 // chargement des routes des controllers 
-app.use('/artists', artistController);
-app.use('/tracks', trackController);
-app.use('/user', userController);
+app.use('/artists', artist);
+app.use('/tracks', track);
+app.use('/user', user);
 
 // Middleware de log
 app.use((req, res, next) => {

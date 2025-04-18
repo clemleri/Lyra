@@ -1,73 +1,24 @@
-import express from 'express';
-import TrackFetchDAO from '../dao/TrackFetchDAO.mjs';
+"use strict"
 
-const router = express.Router();
+import TrackFetchDAO from "../dao/trackFetchDAO.mjs"
 
-// Route GET /tracks/top/:time_range? pour récupérer les pistes les plus écoutées
-router.get('/top/:time_range?', async (req, res) => {
-  try {
-    const access_token = req.session.access_token;;
-    const time_range = req.params.time_range || 'medium_term';
-    const limit = 50;
-    const topTracks = await TrackFetchDAO.findTopTracks(access_token, time_range, limit);
-    res.json(topTracks);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
+// Controller pour les tracks
+const trackController = {
+    findTrack: async (accessToken, spotifyID) => {
+        return await TrackFetchDAO.findTrack(accessToken, spotifyID);
+    },
 
-// Route GET /tracks pour récupérer plusieurs pistes (en passant des IDs en query string, par exemple ?spotifyIDs=id1,id2,...)
-router.get('/', async (req, res) => {
-  try {
-    const access_token = req.session.access_token;
-    const spotifyIDs = req.query.spotifyIDs ? req.query.spotifyIDs.split(',') : [];
-    if (spotifyIDs.length === 0) {
-      return res.status(400).json({ error: "Aucun identifiant de piste fourni." });
-    }
-    const tracks = await TrackFetchDAO.findTracks(access_token, spotifyIDs);
-    res.json(tracks);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
+    findTracks: async (accessToken, spotifyIDs) => {
+        return await TrackFetchDAO.findTracks(accessToken, spotifyIDs);
+    },
 
-// Route GET /tracks/history pour récupérer l'historiques d'écoutes de l'utilisateur 
-router.get('/history', async (req, res) => {
-  try {
-    const access_token = req.session.access_token;
-    const allTracks = await TrackFetchDAO.findTrackHistory(access_token);
+    findTopTracks: async (accessToken, time_range = "medium_term", limit = 10) => {
+        return await TrackFetchDAO.findTopTracks(accessToken, time_range, limit);
+    },
 
-    console.log("routes tracks/history appelée")
+    findTrackHistory: async (accessToken) => {
+        return await TrackFetchDAO.findTrackHistory(accessToken);
+    },
+};
 
-    res.json(allTracks);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-// Route GET /tracks/:spotifyID pour récupérer les détails d'une piste
-router.get('/:spotifyID', async (req, res) => {
-  try {
-    const access_token = req.session.access_token;
-    const spotifyID = req.params.spotifyID;
-    const track = await TrackFetchDAO.findTrack(access_token, spotifyID);
-    res.json(track);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-// Route GET /tracks/:spotifyID/audio-features pour récupérer les caractéristiques audio d'une piste
-router.get('/:spotifyID/audio-features', async (req, res) => {
-  try {
-    const access_token = req.session.access_token;
-    const spotifyID = req.params.spotifyID;
-    const audioFeatures = await TrackFetchDAO.findTrackAudioFeatures(access_token, spotifyID);
-    res.json(audioFeatures);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-
-
-export default router;
+export default trackController;
