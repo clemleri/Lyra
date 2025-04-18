@@ -1,0 +1,46 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "tests": "node --test --experimental-test-coverage --test-force-exit test/*",
+    "test": "node --test --experimental-test-coverage --test-force-exit",
+    "start": "node server.mjs",
+    "start:full": "concurrently \"npm run start\" \"npm run dev\"",
+    "build": "vite build",
+    "start-gendoc": "node swagger-autogen.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@tailwindcss/vite": "^4.1.4",
+    "bootstrap": "^5.3.5",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "express-session": "^1.18.1",
+    "https-proxy-agent": "^7.0.6",
+    "nock": "^14.0.3",
+    "node-fetch": "^3.3.2",
+    "react": "^19.1.0",
+    "react-bootstrap": "^2.10.9",
+    "react-dom": "^19.1.0",
+    "react-router-dom": "^7.5.0",
+    "swagger-autogen": "^2.23.7",
+    "swagger-json": "^2.0.0",
+    "swagger-ui-express": "^5.0.1",
+    "vite": "^6.2.4"
+  },
+  "description": "",
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.4.0",
+    "autoprefixer": "^10.4.21",
+    "concurrently": "^9.1.2",
+    "jest": "^29.7.0",
+    "postcss": "^8.5.3",
+    "sinon": "^20.0.0",
+    "supertest": "^7.1.0"
+  }
+}

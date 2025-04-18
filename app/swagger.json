@@ -1,0 +1,62 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "User API Documentation",
+    "description": "",
+    "version": "1.0.0"
+  },
+  "host": "localhost:3000/api/v0",
+  "basePath": "/",
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "paths": {
+    "/login": {
+      "get": {
+        "summary": "Connexion à spotify",
+        "description": "Cette route redirige vers la page de connexion de spotify",
+        "responses": {
+          "default": {
+            "description": ""
+          }
+        }
+      }
+    },
+    "/callback": {
+      "get": {
+        "summary": "Retour au site",
+        "description": "Cette route permet la redirection notre site après la connexion à spotify",
+        "parameters": [
+          {
+            "name": "code",
+            "in": "query",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/access-token": {
+      "get": {
+        "summary": "Récupération de l acces token",
+        "description": "Cette route renvoie l acces token si celui ci existe, sinon une erreur",
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "401": {
+            "description": "Unauthorized"
+          }
+        }
+      }
+    }
+  }
+}
